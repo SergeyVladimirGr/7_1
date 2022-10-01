@@ -11,9 +11,14 @@ class WallServiceTest {
     @Test
     fun createComment_IdCoincide() {
         // arrange
-        val comment = Comment(1)
-        WallService.clear()
-        val expected = Comment(1)
+        val comment = Comment()
+        val post = Post(
+            postSource = PostSource(),
+            geo = Geo(),
+            copyHistory = СopyHistory()
+        )
+        WallService.add(post)
+        val expected = Comment()
         // act
         val actual = WallService.createComment(1, comment)
         // assert
@@ -22,8 +27,13 @@ class WallServiceTest {
     @Test(expected = PostNotFoundException::class)
     fun createComment_IdDidNotMatch() {
         // arrange
-        val comment = Comment(4)
-        WallService.clear()
+        val comment = Comment()
+        val post = Post(
+            postSource = PostSource(),
+            geo = Geo(),
+            copyHistory = СopyHistory()
+        )
+        WallService.add(post)
         // act
         val actual = WallService.createComment(5, comment)
     }
@@ -76,6 +86,7 @@ class WallServiceTest {
     @Test
     fun update_returnsFalse() {
         // arrange
+        WallService.clear()
         val post = Post(
             postSource = PostSource(),
             geo = Geo(),

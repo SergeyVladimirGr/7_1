@@ -46,20 +46,14 @@ fun main() {
     println(attachments.size)
     println(attachments.last())
 
-    val comment1 = Comment(1)
-    val comment2 = Comment(2)
-    val comment3 = Comment(3)
-    val comment4 = Comment(4)
+    val comment = Comment()
+
     try {
-        val resultCom1 = WallService.createComment(1, comment1)
+        val resultCom = WallService.createComment(1, comment)
+        println(resultCom)
+        val resultCom1 = WallService.createComment(5, comment)
         println(resultCom1)
-        val resultCom2 = WallService.createComment(2, comment2)
-        println(resultCom2)
-        val resultCom3 = WallService.createComment(3, comment3)
-        println(resultCom3)
-        val resultCom4 = WallService.createComment(5, comment4)
-        println(resultCom4)
     } catch (e: PostNotFoundException) {
-        println("Post with this ${comment4.Id} not found!")
+        println("Post with this id not found!")
     }
 }

@@ -8,15 +8,6 @@ object WallService {
     private var posts = emptyArray<Post>()
     private var comments = emptyArray<Comment>()
 
-    fun createComment(postId: Int, comment: Comment): Comment {
-            if (postId == comment.Id) comments += comment else throw PostNotFoundException("Post with this ${comment.Id} not found!")
-            return comments.last()
-    }
-
-    fun clear() {
-        posts = emptyArray<Post>()
-    }
-
     fun add(post: Post): Post {
         val postId = post.copy(id = if (posts.isEmpty()) 1 else posts.last().id + 1)
         posts += postId
@@ -41,5 +32,17 @@ object WallService {
             }
         }
         return result
+    }
+
+    fun createComment(postId: Int, comment: Comment): Comment {
+        for (post in posts) {
+            if (postId == post.id.toInt()) comments += comment else throw PostNotFoundException("Post with this ${postId} not found!")
+            return comments.last()
+        }
+        return comments.last()
+    }
+
+    fun clear() {
+        posts = emptyArray<Post>()
     }
 }
